@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Rock paper scissors 
+    </title>
+
+  <body>
+    <script>
+      function getComputerChoice(){
+        let lst=['rock','paper','scissors'];
+        let x=Math.floor(Math.random()*3);
+
+        return lst[x]
+      }
+
+      function playRound(ps,cs,p){
+        ps=ps.toLowerCase();
+        if(ps===cs){
+          console.log("The round was a draw")
+         
+        }
+
+        else if (cs==='rock'){
+          if (ps==='paper'){
+            console.log('You win!')
+            return p+1;
+          }
+          else{
+            console.log('You lose')
+          }
+          }
+        
+        else if (cs==='scissor'){
+          if (ps==='rock'){
+            console.log('You win!')
+            return p+1;
+          }
+          else{
+            console.log('You lose')
+          }
+          }
+        else if (cs==='paper'){
+          if (ps==='scissor'){
+            console.log('You win!')
+            return p+1;
+          }
+          else{
+            console.log('You lose')
+          }
+          }
+
+      }
+      let player=0;
+      let limit=5;
+      for (let i=0; i<limit ;i++)
+      { 
+        let temmp=player;
+        const playerSelection=prompt("what do you pick?")
+        let computerSelection = getComputerChoice();
+       
+        player= playRound(playerSelection, computerSelection, player);
+        if (player===temmp){
+          limit+=1
+        }
+        if (player===3){
+          console.log('player wins game!')
+          break;
+        }
+      }
+    
+    
+
+    
+
+    </script>
+  </body>
+
+  </head>
+
+</html>
