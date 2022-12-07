@@ -55,6 +55,18 @@
         border-radius: 44px;
       
       }
+      .scoreboard{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin-top: 50px;
+      }
+      .compScore{
+       text-align: center;
+      }
+      .humanScore{
+       text-align: center;
+      }
       
     
     </style>
@@ -73,6 +85,16 @@
     </button>
     </div>
     <kbd class="result">Play</kbd>
+    <div class="scoreboard">
+      <div class="compScore">
+        <h2>Computer score <br><span class="compNumber">0</span></h2>
+      </div>
+      <div class="humanScore">
+        <h2>
+          Human Score <br> <span class="humanNumber">0</span>
+        </h2>
+      </div>
+    </div>
   </div>
     <script>
       function getComputerChoice(){
@@ -83,6 +105,7 @@
       }
 
       function playRound(e){
+        let flag=-1;
         this.classList.add('on-click');
         let playerSelect='';
         if (this.id==='rockBtn'){
@@ -100,25 +123,52 @@
         if(compSelect===playerSelect){
           const resh3= document.querySelector('.result');
           resh3.textContent='It\'s a Tie';
-          return 0;
+          flag=2;
+          
         }
 
         else if (compSelect==='rock' && playerSelect==='scissor' ||compSelect==='paper' && playerSelect==='rock' ){
           const resh3= document.querySelector('.result');
           resh3.textContent='You lose';
-          return -1;
+          flag=0;
+          const compScore= document.querySelector('.compNumber');
+          let cscore=Number(compScore.textContent);
+          compScore.textContent=`${cscore+1}`;
+         
         }
         
         else{
           const resh3= document.querySelector('.result');
           resh3.textContent='You win';
-          return 1;
+          flag=1;
+          const humanScore= document.querySelector('.humanNumber');
+          let hscore=Number(humanScore.textContent);
+          humanScore.textContent=`${hscore+1}`;
+          
         }
+        if(flag===0){
+        const compScore= document.querySelector('.compNumber');
+        if(compScore.textContent==='5'){
+          const resh3= document.querySelector('.result');
+          resh3.textContent='Computer Wins';
+          compScore.textContent='0';
+          const humanScore= document.querySelector('.humanNumber');
+          humanScore.textContent='0';
+        }}
+        if(flag===1){
+        const humanScore= document.querySelector('.humanNumber');
+        if (humanScore.textContent==='5'){
+          const resh3= document.querySelector('.result');
+          resh3.textContent='Human wins';
+          humanScore.textContent='0';
+          const compScore= document.querySelector('.compNumber');
+          compScore.textContent='0';
+        }}
         
           
       }
       function removeTransition(e){
-        console.log(e)
+        
         if (e.propertyName!=='transform') {return} ;
         this.classList.remove('on-click');}
       let p=0;
@@ -127,7 +177,6 @@
       let res=buttons.forEach(button=>button.addEventListener('click',playRound));
       buttons.forEach(button=>button.addEventListener('transitionend',removeTransition))
       
-      console.log(res);
 
       
       
