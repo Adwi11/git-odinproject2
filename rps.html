@@ -5,7 +5,75 @@
       Rock paper scissors 
     </title>
 
-  <body>
+    <style>
+      .display{
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        
+      }
+      .btnDiv{
+        display: flex;
+        flex-direction: row;
+        
+        justify-content: space-evenly;
+        height: 100px;
+        
+      }
+      .Button{
+          width: 100px;
+          margin: 0;
+          padding: 0;
+          border: none;
+          cursor: pointer;
+          transition: transform 0.09s ;
+          background-color: inherit;
+          border-radius: 44px ;
+          
+      }
+      .Button:hover{
+        
+        box-shadow: 0 0 2px 2px #494747;
+        
+      }
+      .on-click{
+        transform: scale(1.1);
+      }
+      .result{
+        align-self: center;
+        border: solid;
+        border-width: 1px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-right: 20px;
+        padding-left: 20px;
+        margin-top: 10px;
+      }
+      .Images{
+        height: 100px;
+        width: 100px;
+        border-radius: 44px;
+      
+      }
+      
+    
+    </style>
+
+  <body style="padding-top: 100px;">
+    <div class="display">
+    <div class="btnDiv">
+    <button id="rockBtn" data-key="rock" class="Button">
+      <img src="images/rock.jpg" alt="buttonjpg" class="Images" />
+    </button>
+    <button id="paperBtn" data-key="paper" class="Button">
+      <img src="images/white-art-paper-500x500.jpg" alt="buttonjpg" class="Images" />
+    </button>
+    <button id="scissorBtn" data-key="scissor" class="Button">
+      <img src="images/scissor.jpg" alt="buttonjpg" class="Images" />
+    </button>
+    </div>
+    <kbd class="result">Play</kbd>
+  </div>
     <script>
       function getComputerChoice(){
         let lst=['rock','paper','scissors'];
@@ -14,62 +82,56 @@
         return lst[x]
       }
 
-      function playRound(ps,cs,p){
-        ps=ps.toLowerCase();
-        if(ps===cs){
-          console.log("The round was a draw")
-         
+      function playRound(e){
+        this.classList.add('on-click');
+        let playerSelect='';
+        if (this.id==='rockBtn'){
+          playerSelect='rock';
+        }
+        else if (e.target.id==='paperBtn'){
+          playerSelect='paper';
+        }
+        else{
+          playerSelect='scissor';
         }
 
-        else if (cs==='rock'){
-          if (ps==='paper'){
-            console.log('You win!')
-            return p+1;
-          }
-          else{
-            console.log('You lose')
-          }
-          }
+        let compSelect=getComputerChoice();
+
+        if(compSelect===playerSelect){
+          const resh3= document.querySelector('.result');
+          resh3.textContent='It\'s a Tie';
+          return 0;
+        }
+
+        else if (compSelect==='rock' && playerSelect==='scissor' ||compSelect==='paper' && playerSelect==='rock' ){
+          const resh3= document.querySelector('.result');
+          resh3.textContent='You lose';
+          return -1;
+        }
         
-        else if (cs==='scissor'){
-          if (ps==='rock'){
-            console.log('You win!')
-            return p+1;
-          }
-          else{
-            console.log('You lose')
-          }
-          }
-        else if (cs==='paper'){
-          if (ps==='scissor'){
-            console.log('You win!')
-            return p+1;
-          }
-          else{
-            console.log('You lose')
-          }
-          }
+        else{
+          const resh3= document.querySelector('.result');
+          resh3.textContent='You win';
+          return 1;
+        }
+        
+          
+      }
+      function removeTransition(e){
+        console.log(e)
+        if (e.propertyName!=='transform') {return} ;
+        this.classList.remove('on-click');}
+      let p=0;
+      let c=0;
+      const buttons=document.querySelectorAll('.Button');
+      let res=buttons.forEach(button=>button.addEventListener('click',playRound));
+      buttons.forEach(button=>button.addEventListener('transitionend',removeTransition))
+      
+      console.log(res);
 
-      }
-      let player=0;
-      let limit=5;
-      for (let i=0; i<limit ;i++)
-      { 
-        let temmp=player;
-        const playerSelection=prompt("what do you pick?")
-        let computerSelection = getComputerChoice();
-       
-        player= playRound(playerSelection, computerSelection, player);
-        if (player===temmp){
-          limit+=1
-        }
-        if (player===3){
-          console.log('player wins game!')
-          break;
-        }
-      }
-    
-    
+      
+      
+     
 
     
 
